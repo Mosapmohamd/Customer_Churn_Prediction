@@ -31,8 +31,8 @@ st.subheader("Fourth, Billing Info", divider=True)
 MonthlyCharges=st.number_input("MonthlyCharges",min_value=18.25, max_value=118.75)
 TotalCharges=st.number_input("TotalCharges",min_value=0.0, max_value=1000.0)
 
-encoders=pkl.load(open("C:/Users/DELL/Documents/Projects/Intern Intelligence/Customr Chrun Prediction/Artifacts/encoders.pkl","rb"))
-with open("C:/Users/DELL/Documents/Projects/Intern Intelligence/Customr Chrun Prediction/Artifacts/rfc.pkl", "rb") as f:
+encoders=pkl.load(open("Artifacts/encoders.pkl","rb"))
+with open("Artifacts/rfc.pkl", "rb") as f:
     model_data = pkl.load(f)
 
 loaded_model = model_data["model"]
