@@ -64,26 +64,3 @@ For telecom companies, reducing churn by even 5% can increase profits by 25-95% 
 ✅ Identifies at-risk customers before they leave
 ✅ Pinpoints why they might churn (price sensitivity? service issues?)
 ✅ Empowers targeted retention campaigns with limited marketing budgets
-
-Try It Yourself
-The complete project is available on GitHub with:
-
-The full analysis Jupyter notebook
-
-Preprocessed dataset
-
-Ready-to-deploy Streamlit app
-
-Step-by-step instructions
-
-Download Project
-Open in Streamlit
-
-"In the age of data, customer retention isn't guesswork—it's a science."
-
-This version:
-✔️ Tells a compelling story about why the project matters
-✔️ Highlights the business impact
-✔️ Shows technical depth without jargon overload
-✔️ Includes clear calls-to-action
-✔️ Uses visual elements (emojis, badges) to break up text
