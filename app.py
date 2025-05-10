@@ -130,7 +130,7 @@ col1, col2 = st.columns([1, 3])
 with col1:
     st.image("https://cdn-icons-png.flaticon.com/512/2331/2331725.png", width=100)
 with col2:
-    st.title("Customer Churn Prediction Dashboard")
+    st.title("Customer Churn Prediction")
     st.markdown("Predict customer churn probability and identify at-risk customers")
 
 # Sidebar for additional options
