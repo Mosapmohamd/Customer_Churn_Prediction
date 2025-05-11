@@ -3,40 +3,6 @@ import pickle as pkl
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-st.title("Customer Chrun Prediction")
-
-st.subheader("Firts, Customer Info", divider=True)
-Gender=st.selectbox("Gender",options=["Male","Female"])
-SeniorCitizen=st.selectbox("Senior", options=[0,1])
-Partner=st.selectbox("partner",options=["Yes","No"])
-Dependents=st.selectbox("Dependents",options=["Yes","No"])
-tenure=st.number_input("Tenure",min_value=0.0, max_value=72.0)
-
-st.subheader("Second, Service Info", divider=True)
-PhoneService=st.selectbox("PhoneService",options=["Yes","No"])
-MultipleLines=st.selectbox("MultipleLines",options=["Yes","No","No phone service"])
-InternetService=st.selectbox("InternetService",options=['DSL', 'Fiber optic', 'No'])
-OnlineSecurity=st.selectbox("OnlineSecurity",options=['No', 'Yes', 'No internet service'])
-OnlineBackup=st.selectbox("OnlineBackup",options=['No', 'Yes', 'No internet service'])
-DeviceProtection=st.selectbox("DeviceProtection",options=['No', 'Yes', 'No internet service'])
-TechSupport=st.selectbox("TechSupport",options=['No', 'Yes', 'No internet service'])
-StreamingTV=st.selectbox("StreamingTV",options=['No', 'Yes', 'No internet service'])
-StreamingMovies=st.selectbox("StreamingMovies",options=['No', 'Yes', 'No internet service'])
-
-st.subheader("Third, Contract Info", divider=True)
-Contract=st.selectbox("Contract",options=['Month-to-month', 'One year', 'Two year'])
-PaperlessBilling=st.selectbox("PaperlessBilling",options=["Yes","No"])
-PaymentMethod=st.selectbox("PaymentMethod",options=['Electronic check', 'Mailed check', 'Bank transfer (automatic)','Credit card (automatic)'])
-
-st.subheader("Fourth, Billing Info", divider=True)
-MonthlyCharges=st.number_input("MonthlyCharges",min_value=18.25, max_value=118.75)
-TotalCharges=st.number_input("TotalCharges",min_value=0.0, max_value=1000.0)
-
-with open("Artifacts/encoders.pkl", "rb") as f:
-    encoders = pkl.load(f)
-with open("Artifacts/rfc.pkl", "rb") as f:
-    model_data = pkl.load(f)
 # Page configuration with dark theme
 st.set_page_config(
     page_title="Customer Churn Prediction",
@@ -157,42 +123,6 @@ def load_artifacts():
 encoders, model_data = load_artifacts()
 loaded_model = model_data["model"]
 feature_names = model_data["features_names"]
-
-input_data = {
-    'gender': Gender,
-    'SeniorCitizen': SeniorCitizen,
-    'Partner': Partner,
-    'Dependents': Dependents,
-    'tenure': tenure,
-    'PhoneService': PhoneService,
-    'MultipleLines': MultipleLines,
-    'InternetService': InternetService,
-    'OnlineSecurity': OnlineSecurity,
-    'OnlineBackup': OnlineBackup,
-    'DeviceProtection': DeviceProtection,
-    'TechSupport': TechSupport,
-    'StreamingTV': StreamingTV,
-    'StreamingMovies': StreamingMovies,
-    'Contract': Contract,
-    'PaperlessBilling': PaperlessBilling,
-    'PaymentMethod': PaymentMethod,
-    'MonthlyCharges': MonthlyCharges,
-    'TotalCharges': TotalCharges
-}
-input_data_df=pd.DataFrame([input_data])
-# encode categorical featires using teh saved encoders
-for column, encoder in encoders.items():
-    input_data_df[column] = encoder.transform(input_data_df[column])
-
-# make a prediction
-prediction = loaded_model.predict(input_data_df)
-pred_prob = loaded_model.predict_proba(input_data_df)
-
-st.text(prediction)
-
-# results
-st.text(f"Prediction: {'Churn' if prediction[0] == 1 else 'No Churn'}")
-st.text(f"Prediciton Probability: {pred_prob}")
 # App header
 col1, col2 = st.columns([1, 3])
 with col1:
@@ -415,54 +345,6 @@ if predict_button:
         st.write("Input Features:", input_data_df)
         st.write("Prediction:", "Churn" if prediction[0] == 1 else "No Churn")
         st.write("Prediction Probabilities:", pred_prob)
-
-# Add some sample customer profiles for quick testing
-with st.expander("💡 Try Sample Customer Profiles"):
-    sample1, sample2 = st.columns(2)
-    
-    with sample1:
-        if st.button("High Risk Profile"):
-            st.session_state.Gender = "Male"
-            st.session_state.SeniorCitizen = 0
-            st.session_state.Partner = "No"
-            st.session_state.Dependents = "No"
-            st.session_state.tenure = 1
-            st.session_state.PhoneService = "Yes"
-            st.session_state.MultipleLines = "No"
-            st.session_state.InternetService = "Fiber optic"
-            st.session_state.OnlineSecurity = "No"
-            st.session_state.OnlineBackup = "No"
-            st.session_state.DeviceProtection = "No"
-            st.session_state.TechSupport = "No"
-            st.session_state.StreamingTV = "Yes"
-            st.session_state.StreamingMovies = "Yes"
-            st.session_state.Contract = "Month-to-month"
-            st.session_state.PaperlessBilling = "Yes"
-            st.session_state.PaymentMethod = "Electronic check"
-            st.session_state.MonthlyCharges = 100.0
-            st.session_state.TotalCharges = 100.0
-    
-    with sample2:
-        if st.button("Low Risk Profile"):
-            st.session_state.Gender = "Female"
-            st.session_state.SeniorCitizen = 0
-            st.session_state.Partner = "Yes"
-            st.session_state.Dependents = "Yes"
-            st.session_state.tenure = 60
-            st.session_state.PhoneService = "Yes"
-            st.session_state.MultipleLines = "No"
-            st.session_state.InternetService = "DSL"
-            st.session_state.OnlineSecurity = "Yes"
-            st.session_state.OnlineBackup = "Yes"
-            st.session_state.DeviceProtection = "Yes"
-            st.session_state.TechSupport = "Yes"
-            st.session_state.StreamingTV = "No"
-            st.session_state.StreamingMovies = "No"
-            st.session_state.Contract = "Two year"
-            st.session_state.PaperlessBilling = "No"
-            st.session_state.PaymentMethod = "Bank transfer (automatic)"
-            st.session_state.MonthlyCharges = 50.0
-            st.session_state.TotalCharges = 3000.0
 
 # Footer
 st.markdown("---")
