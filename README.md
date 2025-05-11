@@ -1,4 +1,4 @@
-# Customer Churn Prediction Dashboard
+# Customer Churn Prediction 
 
 ## Overview  
 A Streamlit web application that predicts customer churn probability using machine learning. The application features a modern dark theme interface with comprehensive customer data collection and detailed risk analysis.
