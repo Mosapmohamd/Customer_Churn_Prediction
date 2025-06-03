@@ -55,10 +55,7 @@ def load_sample_profile(profile_type):
             'PaymentMethod': "Bank transfer (automatic)",
             'MonthlyCharges': 50.0,
             'TotalCharges': 3000.0
-       }
-        for key, value in sample_data.items():
-            st.session_state[key] = value
-        st.experimental_rerun()   
+        }
     else:  # high_risk
         return {
             'Gender': "Male",
@@ -80,10 +77,8 @@ def load_sample_profile(profile_type):
             'PaymentMethod': "Electronic check",
             'MonthlyCharges': 100.0,
             'TotalCharges': 100.0
-               }
-        for key, value in sample_data.items():
-            st.session_state[key] = value
-        st.experimental_rerun()   
+        }
+
 # App header
 col1, col2 = st.columns([1, 3])
 with col1:
