@@ -114,9 +114,9 @@ st.markdown("""
 # Load model and encoders
 @st.cache_resource
 def load_artifacts():
-    with open("encoders.pkl", "rb") as f:
+    with open("Artifacts/encoders.pkl", "rb") as f:
         encoders = pkl.load(f)
-    with open("rfc.pkl", "rb") as f:
+    with open("Artifacts/rfc.pkl", "rb") as f:
         model_data = pkl.load(f)
     return encoders, model_data
 
