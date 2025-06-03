@@ -15,7 +15,7 @@ st.set_page_config(
 # Custom CSS
 st.markdown("""
     <style>
-        /* (Keep your existing CSS styles here) */
+        /* Add your custom CSS styles here */
     </style>
 """, unsafe_allow_html=True)
 
@@ -35,7 +35,7 @@ feature_names = model_data["features_names"]
 # Sample profile data loader
 def load_sample_profile(profile_type):
     if profile_type == "low_risk":
-        return {
+        sample_data = {
             'Gender': "Female",
             'SeniorCitizen': 0,
             'Partner': "Yes",
@@ -57,7 +57,7 @@ def load_sample_profile(profile_type):
             'TotalCharges': 3000.0
         }
     else:  # high_risk
-        return {
+        sample_data = {
             'Gender': "Male",
             'SeniorCitizen': 0,
             'Partner': "No",
@@ -78,11 +78,15 @@ def load_sample_profile(profile_type):
             'MonthlyCharges': 100.0,
             'TotalCharges': 100.0
         }
+    
+    for key, value in sample_data.items():
+        st.session_state[key] = value
+    st.experimental_rerun()
 
 # App header
 col1, col2 = st.columns([1, 3])
 with col1:
-    st.image("https://cdn-icons-png.flaticon.com/512/2331/2331725.png", width=100)
+    st.image("https://example.com/valid_image.png", width=100)  # Replace with a valid image URL
 with col2:
     st.title("Customer Churn Prediction Dashboard")
     st.markdown("Predict customer churn probability and identify at-risk customers")
@@ -99,7 +103,7 @@ with st.sidebar:
 tab1, tab2, tab3, tab4 = st.tabs(["Customer Info", "Service Info", "Contract Info", "Billing Info"])
 
 with tab1:
-    st.subheader("Customer Demographics", divider="blue")
+    st.subheader("Customer Demographics")
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("<div class='input-explanation'>Select the customer's gender:</div>", unsafe_allow_html=True)
@@ -124,7 +128,7 @@ with tab1:
                       key="tenure", label_visibility="collapsed")
 
 with tab2:
-    st.subheader("Service Details", divider="blue")
+    st.subheader("Service Details")
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("<div class='input-explanation'>Phone service:</div>", unsafe_allow_html=True)
@@ -155,7 +159,7 @@ with tab2:
         TechSupport = st.selectbox("Tech Support", options=['No', 'Yes', 'No internet service'], 
                                   key="TechSupport", label_visibility="collapsed")
 
-    st.subheader("Streaming Services", divider="blue")
+    st.subheader("Streaming Services")
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("<div class='input-explanation'>Streaming TV:</div>", unsafe_allow_html=True)
@@ -167,7 +171,7 @@ with tab2:
                                       key="StreamingMovies", label_visibility="collapsed")
 
 with tab3:
-    st.subheader("Contract Details", divider="blue")
+    st.subheader("Contract Details")
     st.markdown("<div class='input-explanation'>Contract type:</div>", unsafe_allow_html=True)
     Contract = st.selectbox("Contract Type", options=['Month-to-month', 'One year', 'Two year'],
                           key="Contract", label_visibility="collapsed")
@@ -183,7 +187,7 @@ with tab3:
                                key="PaymentMethod", label_visibility="collapsed")
 
 with tab4:
-    st.subheader("Billing Information", divider="blue")
+    st.subheader("Billing Information")
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("<div class='input-explanation'>Monthly charges ($):</div>", unsafe_allow_html=True)
@@ -199,17 +203,11 @@ with st.expander("💡 Try Sample Customer Profiles"):
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Load High Risk Profile"):
-            sample_data = load_sample_profile("high_risk")
-            for key, value in sample_data.items():
-                st.session_state[key] = value
-            st.rerun()
+            load_sample_profile("high_risk")
             
     with col2:
         if st.button("Load Low Risk Profile"):
-            sample_data = load_sample_profile("low_risk")
-            for key, value in sample_data.items():
-                st.session_state[key] = value
-            st.rerun()
+            load_sample_profile("low_risk")
 
 # Prediction button
 st.markdown("<br>", unsafe_allow_html=True)
@@ -278,7 +276,7 @@ if predict_button:
     
     # Feature importance
     if show_details and hasattr(loaded_model, 'feature_importances_'):
-        st.subheader("Feature Importance", divider="gray")
+        st.subheader("Feature Importance")
         importances = loaded_model.feature_importances_
         indices = importances.argsort()[::-1]
         feature_importance_df = pd.DataFrame({
